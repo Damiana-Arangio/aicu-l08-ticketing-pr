@@ -16,7 +16,7 @@ Non usarla per proporre nuove feature, redesign o refactor generale.
 - Contract: lavoro-precedente/contract-sketch-create-ticket.md
 - Mappa dei punti di intervento: output/entry-point-map.md
 - Piano patch: `output/prompt-patch-limitato.md`
-- Diff / branch / PR: branch `l08-create-ticket-backend-skeleton`
+- Diff / branch / PR: branch da `l08-create-ticket-backend-skeleton` verso `main`
 
 ## Checklist
 
