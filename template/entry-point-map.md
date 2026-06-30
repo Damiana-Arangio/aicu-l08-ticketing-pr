@@ -172,7 +172,3 @@ Fermarsi se:
 - serve accettare campi non previsti dal contract minimo;
 - il tool propone di modificare `src/api.js`, `src/App.jsx`, `TicketList.jsx`, `TicketCard.jsx` o `styles.css` senza chiedere conferma;
 - il tool propone più dello slice approvato.
-
-## Domande Aperte Per L08
-
-- Le istruzioni L08 citano la verifica su priorità non ammessa: `priority` va rifiutata se presente nel payload, anche se nel data sketch L06 era rimandata?

@@ -65,11 +65,10 @@ Non aggiungere:
 - UI completa di creazione ticket;
 
 Non accettare dal payload:
-- `attachments`;
-- `customer`;
-- `priority`;
-- `area`;
-- altri campi fuori dal contract minimo.
+- `attachments`, perché è fuori scope nel contract minimo;
+- `customer`, `priority` e `area`, perché sono rimandati nel data sketch L06 e non approvati per questo primo slice;
+- `status`, perché per questo slice viene generato lato server come `open`;
+- altri campi non previsti dal contract minimo o non approvati per questo primo slice.
 
 Prima di modificare, conferma:
 - task;
@@ -129,6 +128,8 @@ Risultato atteso:
 
 5. Eseguire una richiesta POST con title vuoto:
 
+POST http://127.0.0.1:3001/api/tickets
+
 {
   "title": "",
   "description": "Il team supporto segnala che l'elenco dei ticket non si carica correttamente."
@@ -140,6 +141,8 @@ Risultato atteso:
 
 6. Eseguire una richiesta POST con description vuota:
 
+POST http://127.0.0.1:3001/api/tickets
+
 {
   "title": "Problema caricamento ticket",
   "description": ""
@@ -150,6 +153,8 @@ Risultato atteso:
 - nessun ticket viene creato.
 
 7. Eseguire una richiesta POST con un campo fuori contratto, per esempio attachments:
+
+POST http://127.0.0.1:3001/api/tickets
 
 {
   "title": "Problema caricamento ticket",
