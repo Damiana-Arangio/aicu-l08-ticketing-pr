@@ -21,21 +21,37 @@ Dato questo task:
 "Serve creare ticket dal supporto."
 
 Usa questi input:
-- issue: [link o testo]
-- contract sketch: [link o testo]
-- data sketch: [link o testo]
-- mappa dei punti di intervento: [link o testo]
+- issue: `lavoro-precedente/issue-create-ticket.md`
+- contract sketch: `lavoro-precedente/contract-sketch-create-ticket.md`
+- data sketch: `lavoro-precedente/data-sketch-create-ticket.md`
+- mappa dei punti di intervento: `template/entry-point-map.md`
 
 Applica solo il primo slice approvato:
-[descrivi lo slice]
+
+Completare il backend skeleton minimo per `POST /api/tickets`.
+
+La route deve ricevere solo `title` e `description`, validarli come campi obbligatori e non vuoti, creare un nuovo ticket lato server e inserirlo nell’array `tickets`.
+
+Il server deve generare i campi necessari per mantenere il ticket coerente con la repo: `id`, `createdAt`, `updatedAt`, `source: "support"` e `status: "open"`.
+
+Con payload valido, la risposta attesa è `201 Created - Ticket creato con successo`, includendo almeno i campi previsti dal contract L06: `id`, `title`, `description` e `createdAt`.
+
+Con payload non valido, la route deve rispondere con `400 Bad Request`: sia quando `title` o `description` sono vuoti/mancanti, sia quando viene inviato un campo fuori contratto, per esempio `attachments`.
+
+Il nuovo ticket deve essere verificabile con `GET /api/tickets`.
 
 File o aree ammesse:
-- [file/area]
-- [file/area]
+- server/index.js
+- server/data/tickets.js
 
 File o aree vietate:
-- [file/area]
-- [file/area]
+- src/api.js
+- src/App.jsx
+- src/components/TicketList.jsx
+- src/components/TicketCard.jsx
+- src/styles.css
+- src/main.jsx
+- index.html
 
 Non aggiungere:
 - auth;
@@ -46,12 +62,22 @@ Non aggiungere:
 - migration;
 - redesign;
 - refactor generale.
+- UI completa di creazione ticket;
+
+Non accettare dal payload:
+- `attachments`;
+- `customer`;
+- `priority`;
+- `area`;
+- altri campi fuori dal contract minimo.
 
 Prima di modificare, conferma:
 - task;
 - file che toccherai;
+- file che non toccherai;
 - cosa resta fuori scope;
 - verifica manuale proposta.
+- quando ti fermerai.
 
 Applica solo la patch minima approvata.
 Fermati se servono file o decisioni fuori piano.
@@ -71,7 +97,69 @@ Se manca uno di questi punti, chiedi correzione prima della patch.
 ## Verifica Attesa
 
 ```txt
-[scrivi la verifica manuale minima da eseguire nel lab]
+1. Avviare il progetto.
+
+2. Eseguire una richiesta GET iniziale:
+
+GET http://127.0.0.1:3001/api/tickets
+
+Risultato atteso:
+- la richiesta continua a restituire i ticket aperti già presenti.
+
+3. Eseguire una richiesta POST con payload valido:
+
+POST http://127.0.0.1:3001/api/tickets
+
+{
+  "title": "Problema caricamento ticket",
+  "description": "Il team supporto segnala che l'elenco dei ticket non si carica correttamente."
+}
+
+Risultato atteso:
+- 201 Created - Ticket creato con successo;
+- la risposta contiene almeno id, title, description e createdAt;
+- il nuovo ticket viene aggiunto all’array tickets.
+
+4. Eseguire di nuovo:
+
+GET http://127.0.0.1:3001/api/tickets
+
+Risultato atteso:
+- il nuovo ticket è presente nella risposta di GET /api/tickets.
+
+5. Eseguire una richiesta POST con title vuoto:
+
+{
+  "title": "",
+  "description": "Il team supporto segnala che l'elenco dei ticket non si carica correttamente."
+}
+
+Risultato atteso:
+- 400 Bad Request con errore leggibile sul campo title;
+- nessun ticket viene creato.
+
+6. Eseguire una richiesta POST con description vuota:
+
+{
+  "title": "Problema caricamento ticket",
+  "description": ""
+}
+
+Risultato atteso:
+- 400 Bad Request con errore leggibile sul campo description;
+- nessun ticket viene creato.
+
+7. Eseguire una richiesta POST con un campo fuori contratto, per esempio attachments:
+
+{
+  "title": "Problema caricamento ticket",
+  "description": "Il team supporto segnala che l'elenco dei ticket non si carica correttamente.",
+  "attachments": ["screenshot.png"]
+}
+
+Risultato atteso:
+- 400 Bad Request con errore leggibile sul campo attachments;
+- nessun ticket viene creato.
 ```
 
 ## Note
