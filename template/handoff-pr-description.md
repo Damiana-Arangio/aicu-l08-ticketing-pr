@@ -17,19 +17,27 @@ Non usarlo per promettere la feature completa o nascondere blocchi.
 ## Summary
 
 ```txt
-[descrivi in 2-3 righe il primo slice avviato]
+Avviato un primo slice backend minimo per la creazione di ticket da richiesta supporto.
+
+La patch implementa POST /api/tickets senza completare una feature full-stack.
+Il payload valido per questo slice contiene solo title e description; source, status, id e timestamp vengono generati lato server.
 ```
 
 ## Issue
 
-- Issue collegata: [link o riferimento]
+- Issue collegata: lavoro-precedente/issue-create-ticket.md
 
 ## Scope
 
 Incluso:
 
-- [cosa e' incluso]
-- [cosa e' incluso]
+- implementazione minima di POST /api/tickets;
+- validazione di title obbligatorio e non vuoto;
+- validazione di description obbligatoria e non vuota;
+- rifiuto dei campi fuori contratto, inclusi priority e attachments;
+- aggiunta del nuovo ticket all'array `tickets`, senza persistenza su file o database;
+- generazione lato server di id, createdAt, updatedAt, source: "support" e status: "open";
+- mantenimento del comportamento esistente di GET /api/tickets.
 
 Fuori scope:
 
@@ -39,45 +47,38 @@ Fuori scope:
 - owner avanzato;
 - dashboard;
 - migration;
-- UI completa, se non inclusa nello slice;
+- UI completa;
 - refactor generale.
 
 ## File Toccati
 
-| File | Perche' e' stato toccato |
-| --- | --- |
-| [file] | [motivo] |
-| [file] | [motivo] |
+| `server/index.js` | Per sostituire la risposta `501 NOT_IMPLEMENTED` di `POST /api/tickets` con il primo skeleton backend minimo per create ticket |
 
 ## Gate Prima Della Patch
 
 Il tool ha confermato prima di modificare:
 
-- [ ] task;
-- [ ] file da toccare;
-- [ ] file da non toccare;
-- [ ] verifica manuale proposta;
-- [ ] quando fermarsi.
+- [si] task;
+- [si] file da toccare;
+- [si] file da non toccare;
+- [si] verifica manuale proposta;
+- [si] quando fermarsi.
 
 ## Verifica
 
-- [ ] Caso valido provato o dichiarato non ancora eseguibile.
-- [ ] Caso invalido previsto o bloccato con motivo.
-- [ ] Comportamento esistente non intenzionalmente cambiato.
+- [si] Caso valido provato o dichiarato non ancora eseguibile.
+- [si] Caso invalido previsto o bloccato con motivo.
+- [si] Comportamento esistente non intenzionalmente cambiato.
 
 ## Output AI
 
 | Output | Decisione |
 | --- | --- |
-| Piano | accettato / modificato / rifiutato |
-| Patch | accettata / modificata / rifiutata |
-| Review | accettata / modificata / rifiutata |
+| Piano | modificato |
+| Patch | accettata |
+| Review | da completare |
 
-## Residuo
-
-- [cosa resta da fare]
-- [cosa serve verificare in L09-L12]
 
 ## Rischio Residuo
 
-- [rischio o blocco ancora aperto]
+- Il ticket viene aggiunto all'array al momento della richiesta, quindi risulta visibile con `GET /api/tickets`, ma non persiste dopo il riavvio del server.
