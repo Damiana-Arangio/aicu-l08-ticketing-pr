@@ -12,42 +12,40 @@ Non usarla per proporre nuove feature, redesign o refactor generale.
 
 ## Input Review
 
-- Issue: [link o riferimento]
-- Contract: [link o riferimento]
-- Mappa dei punti di intervento: [link o riferimento]
-- Piano patch: [link o riferimento]
-- Diff / branch / PR: [link o riferimento]
+- Issue: lavoro-precedente/issue-create-ticket.md
+- Contract: lavoro-precedente/contract-sketch-create-ticket.md
+- Mappa dei punti di intervento: output/entry-point-map.md
+- Piano patch: `output/prompt-patch-limitato.md`
+- Diff / branch / PR: branch `l08-create-ticket-backend-skeleton`
 
 ## Checklist
 
 | Controllo | Esito | Nota |
 | --- | --- | --- |
-| File toccati nello scope | ok / problema | [nota] |
-| Diff letto e comprensibile | ok / problema | [nota] |
-| Contract rispettato | ok / problema | [nota] |
-| Fuori scope / non-obiettivi (non-goals) rispettati | ok / problema | [nota] |
-| Verifica manuale presente | ok / problema | [nota] |
-| Feature extra assenti | ok / problema | [nota] |
-| Residuo chiaro | ok / problema | [nota] |
+| File toccati nello scope | ok |
+| Diff letto e comprensibile | ok |
+| Contract rispettato | ok |
+| Fuori scope / non-obiettivi (non-goals) rispettati | ok |
+| Verifica manuale presente | ok |
+| Feature extra assenti | ok |
+| Residuo chiaro | ok |
 
 ## Findings
 
-- [problema trovato oppure "Nessun problema trovato nello scope della review"]
+- Nessun problema trovato nello scope della review
 
 ## Decisione
 
 Scegli una:
 
 - OK per continuare nel Modulo 3.
-- Da correggere prima di continuare.
-- Fermarsi e chiedere contesto.
 
 Motivo:
 
 ```txt
-[spiega in 2-3 righe]
+La patch runtime rispetta scope e contract del primo slice, la verifica manuale copre i casi validi e invalidi previsti, e non risultano modifiche UI o feature extra nello scope funzionale.
 ```
 
 ## Follow-Up Minimo
 
-- [prossimo passo piccolo]
+- Riprendere da `POST /api/tickets` e decidere se consolidare il contract minimo oppure ampliare lo slice con un nuovo campo ammesso, mantenendo fuori scope auth, UI completa, allegati, notifiche, dashboard e migration.
